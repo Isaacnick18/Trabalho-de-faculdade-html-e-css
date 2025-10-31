@@ -1,0 +1,266 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Publicação de Isaac Nicholas Marcelino José Maria</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+    <header>
+        <h1>Trabalho de Publicação</h1>
+        <p>Autor: <strong>Isaac Nicholas Marcelino José Maria</strong></p>
+    </header>
+
+    <main>
+        <section id="links">
+            <h2>Links Essenciais</h2>
+            <ul>
+                <li>
+                    <a href="#quiz-container">
+                        Link para o Meu Quiz do Brasil (Simulando: www.goolgeomeuquiz.com)
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.espn.com.br/futebol/libertadores/artigo/_/id/15888161/flamengo-segura-pressao-racing-empata-um-a-menos-vai-final-libertadores-em-busca-inedito-tetra" target="_blank">
+                        Matéria da ESPN (Flamengo vs Racing)
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section id="imagem-destaque">
+            <h2>Imagem em Destaque</h2>
+            <figure>
+                <img src="https://lncimg.lance.com.br/cdn-cgi/image/width=560,height=350,quality=75,fit=pad,format=webp/uploads/2025/10/Flamengo-x-Racing-no-Maracana-scaled-aspect-ratio-512-320.jpg" alt="Jogo Flamengo e Racing no Maracanã">
+                <figcaption>
+                    Descrição da imagem: Jogo Flamengo x Racing no Maracanã.
+                </figcaption>
+            </figure>
+        </section>
+
+        <hr>
+
+        <section id="quiz-container">
+            <h2>Quiz do Brasil: Certo ou Errado</h2>
+            <p>Teste seus conhecimentos sobre o Brasil e veja sua pontuação no final!</p>
+
+            <div id="quiz">
+                </div>
+
+            <button id="submit-quiz" onclick="verificarRespostas()">Verificar Respostas</button>
+            <div id="resultado"></div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Isaac Nicholas Marcelino José Maria. Direitos reservados. Conteúdo de terceiros: ESPN e Lance.</p>
+    </footer>
+
+    <script>
+        // Array de perguntas e respostas (6 perguntas conforme solicitado)
+        const perguntasQuiz = [
+            {
+                pergunta: "O Brasil é o país com a maior biodiversidade do mundo?",
+                respostaCorreta: "Certo"
+            },
+            {
+                pergunta: "A capital do Brasil é o Rio de Janeiro?",
+                respostaCorreta: "Errado" // A capital é Brasília
+            },
+            {
+                pergunta: "A frase 'Ordem e Progresso' está escrita na bandeira brasileira?",
+                respostaCorreta: "Certo"
+            },
+            {
+                pergunta: "O Pantanal é considerado o maior bioma brasileiro em extensão territorial?",
+                respostaCorreta: "Errado" // A Amazônia é a maior
+            },
+            {
+                pergunta: "O Brasil faz fronteira com todos os países da América do Sul?",
+                respostaCorreta: "Errado" // Não faz fronteira com Chile e Equador
+            },
+            {
+                pergunta: "A culinária brasileira é influenciada pelas culturas indígena, africana e europeia?",
+                respostaCorreta: "Certo"
+            }
+        ];
+
+        const quizDiv = document.getElementById('quiz');
+        const resultadoDiv = document.getElementById('resultado');
+
+        // Função para carregar as perguntas na página
+        function carregarQuiz() {
+            perguntasQuiz.forEach((item, index) => {
+                const divPergunta = document.createElement('div');
+                divPergunta.classList.add('pergunta-item');
+                divPergunta.innerHTML = `
+                    <h3>${index + 1}. ${item.pergunta}</h3>
+                    <label>
+                        <input type="radio" name="pergunta${index}" value="Certo"> Certo
+                    </label>
+                    <label>
+                        <input type="radio" name="pergunta${index}" value="Errado"> Errado
+                    </label>
+                    <p class="feedback" id="feedback${index}"></p>
+                `;
+                quizDiv.appendChild(divPergunta);
+            });
+        }
+
+        // Função para verificar as respostas e mostrar o resultado
+        function verificarRespostas() {
+            let acertos = 0;
+            const totalPerguntas = perguntasQuiz.length;
+
+            perguntasQuiz.forEach((item, index) => {
+                const nomeRadio = `pergunta${index}`;
+                const respostaSelecionada = document.querySelector(`input[name="${nomeRadio}"]:checked`);
+                const feedbackElement = document.getElementById(`feedback${index}`);
+                
+                feedbackElement.textContent = ''; // Limpa feedback anterior
+
+                if (respostaSelecionada) {
+                    if (respostaSelecionada.value === item.respostaCorreta) {
+                        acertos++;
+                        // Adiciona a classe 'correta' no CSS para mudar a aparência
+                        feedbackElement.textContent = `✅ Correto!`;
+                        feedbackElement.classList.remove('errado');
+                        feedbackElement.classList.add('correto');
+                    } else {
+                        // Adiciona a classe 'errada' no CSS para mudar a aparência
+                        feedbackElement.textContent = `❌ Errado. A resposta correta era: ${item.respostaCorreta}.`;
+                        feedbackElement.classList.remove('correto');
+                        feedbackElement.classList.add('errado');
+                    }
+                } else {
+                    feedbackElement.textContent = `⚠️ Por favor, selecione uma resposta.`;
+                    feedbackElement.classList.remove('correto', 'errado');
+                }
+            });
+
+            // Exibe a pontuação final
+            resultadoDiv.innerHTML = `<h2>Você acertou ${acertos} de ${totalPerguntas} perguntas!</h2>`;
+            resultadoDiv.style.display = 'block';
+        }
+
+        // Carrega o Quiz assim que a página é carregada
+        carregarQuiz();
+    </script>
+</body>
+</html>
+<style>/*
+ * Arquivo CSS Externo: estilo.css
+ * Mudei a aparência do H1 e apliquei as cores de fundo e texto.
+ */
+
+/* Estilo para o corpo da página (Background e Cor do Texto) */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0; /* Cor de fundo - Cinza claro */
+    color: #333333; /* Cor do texto principal - Cinza escuro */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+main {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff; /* Fundo branco para o conteúdo principal */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    background-color: #004d99; /* Um tom de azul para o cabeçalho */
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Aplicação da Mudança de Aparência escolhida (mudar a aparência de qualquer coisa) */
+/* Mudei a cor de fundo e sombra do título principal da página */
+header h1 {
+    color: #ffd700; /* Cor do texto do H1 (Dourado/Amarelo) */
+    background-color: #003366; /* Cor de fundo escura para contraste */
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: inline-block;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos para a imagem */
+#imagem-destaque img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 15px 0;
+    border: 5px solid #004d99; /* Borda na cor do cabeçalho */
+}
+
+/* Estilos para o Quiz */
+#quiz-container {
+    padding-top: 20px;
+    border-top: 1px solid #ccc;
+}
+
+.pergunta-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.pergunta-item label {
+    display: block;
+    margin: 5px 0;
+    cursor: pointer;
+}
+
+#submit-quiz {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+#submit-quiz:hover {
+    background-color: #45a049;
+}
+
+#resultado {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e6e6e6;
+    border: 1px solid #ccc;
+    display: none; /* Inicia escondido */
+}
+
+/* Cores de feedback do Quiz */
+.feedback.correto {
+    color: green;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.feedback.errado {
+    color: red;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* Estilo para o rodapé */
+footer {
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    font-size: 0.8em;
+    background-color: #eeeeee;
+}
+</style>
